@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import {
   Anchor,
   Button,
+  Container,
   Group,
   Paper,
   PasswordInput,
@@ -90,55 +91,62 @@ export default function RegisterPage() {
   }
 
   return (
-    <Paper p="xl" maw={420} mx="auto" mt={120} withBorder>
-      <Title order={2} mb="lg">
-        Create RavaSIM Account
-      </Title>
+    <Container size={420} py="xl">
+      <Paper p="xl" withBorder radius="md">
+        <Title order={2} mb="lg">
+          Create RavaSIM Account
+        </Title>
 
-      <TextInput
-        label="Name"
-        value={name}
-        onChange={(e) => setName(e.currentTarget.value)}
-        error={errors.name}
-        autoComplete="name"
-      />
+        <TextInput
+          label="Name"
+          value={name}
+          onChange={(e) => setName(e.currentTarget.value)}
+          error={errors.name}
+          autoComplete="name"
+        />
 
-      <TextInput
-        mt="md"
-        label="Email"
-        value={email}
-        onChange={(e) => setEmail(e.currentTarget.value)}
-        error={errors.email}
-        autoComplete="email"
-      />
+        <TextInput
+          mt="md"
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.currentTarget.value)}
+          error={errors.email}
+          autoComplete="email"
+        />
 
-      <PasswordInput
-        mt="md"
-        label="Password"
-        value={password}
-        onChange={(e) => setPassword(e.currentTarget.value)}
-        error={errors.password}
-        autoComplete="new-password"
-      />
+        <PasswordInput
+          mt="md"
+          label="Password"
+          value={password}
+          onChange={(e) => setPassword(e.currentTarget.value)}
+          error={errors.password}
+          autoComplete="new-password"
+        />
 
-      <PasswordInput
-        mt="md"
-        label="Confirm Password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.currentTarget.value)}
-        error={errors.confirmPassword}
-        autoComplete="new-password"
-      />
+        <PasswordInput
+          mt="md"
+          label="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.currentTarget.value)}
+          error={errors.confirmPassword}
+          autoComplete="new-password"
+        />
 
-      <Button fullWidth mt="xl" loading={isSubmitting} onClick={handleRegister}>
-        Register
-      </Button>
+        <Button
+          fullWidth
+          mt="xl"
+          loading={isSubmitting}
+          onClick={handleRegister}
+        >
+          Register
+        </Button>
 
-      <Group mt="md" justify="space-between">
-        <Anchor component={Link} href="/login" size="sm">
-          Already have account? Login
-        </Anchor>
-      </Group>
-    </Paper>
+        <Group mt="md" justify="space-between">
+          <Anchor component={Link} href="/login" size="sm">
+            Already have account? Login
+          </Anchor>
+        </Group>
+      </Paper>
+    </Container>
   )
 }

@@ -1,7 +1,7 @@
 import { createTheme } from "@mantine/core"
 
 export const theme = createTheme({
-  primaryColor: "blue",
+  primaryColor: "brand",
 
   colors: {
     brand: [
@@ -19,4 +19,10 @@ export const theme = createTheme({
   },
 
   defaultRadius: "md",
+  fontFamily:
+    "var(--font-geist-sans), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
+  headings: {
+    fontFamily:
+      "var(--font-geist-sans), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
+  },
 })

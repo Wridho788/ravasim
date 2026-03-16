@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import {
   Anchor,
   Button,
+  Container,
   Group,
   Paper,
   PasswordInput,
@@ -87,40 +88,42 @@ export default function LoginPage() {
   }
 
   return (
-    <Paper p="xl" maw={420} mx="auto" mt={120} withBorder>
-      <Title order={2} mb="xs">
-        Login to RavaSIM
-      </Title>
-      <Text size="sm" c="dimmed" mb="lg">
-        Use demo credentials: demo@ravasim.com / 123456
-      </Text>
+    <Container size={420} py="xl">
+      <Paper p="xl" withBorder radius="md">
+        <Title order={2} mb="xs">
+          Login to RavaSIM
+        </Title>
+        <Text size="sm" c="dimmed" mb="lg">
+          Use demo credentials: demo@ravasim.com / 123456
+        </Text>
 
-      <TextInput
-        label="Email"
-        value={email}
-        onChange={(e) => setEmail(e.currentTarget.value)}
-        error={errors.email}
-        autoComplete="email"
-      />
+        <TextInput
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.currentTarget.value)}
+          error={errors.email}
+          autoComplete="email"
+        />
 
-      <PasswordInput
-        mt="md"
-        label="Password"
-        value={password}
-        onChange={(e) => setPassword(e.currentTarget.value)}
-        error={errors.password}
-        autoComplete="current-password"
-      />
+        <PasswordInput
+          mt="md"
+          label="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          error={errors.password}
+          autoComplete="current-password"
+        />
 
-      <Button fullWidth mt="xl" loading={isSubmitting} onClick={handleLogin}>
-        Login
-      </Button>
+        <Button fullWidth mt="xl" loading={isSubmitting} onClick={handleLogin}>
+          Login
+        </Button>
 
-      <Group mt="md" justify="space-between">
-        <Anchor component={Link} href="/register" size="sm">
-          Don&apos;t have account? Register
-        </Anchor>
-      </Group>
-    </Paper>
+        <Group mt="md" justify="space-between">
+          <Anchor component={Link} href="/register" size="sm">
+            Don&apos;t have account? Register
+          </Anchor>
+        </Group>
+      </Paper>
+    </Container>
   )
 }

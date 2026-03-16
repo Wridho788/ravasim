@@ -22,7 +22,7 @@ export default function Sidebar() {
         <NavLink
           key={item.href}
           label={item.label}
-          active={pathname === item.href}
+          active={pathname === item.href || pathname.startsWith(item.href + "/")}
           onClick={() => router.push(item.href)}
         />
       ))}
