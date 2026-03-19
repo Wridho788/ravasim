@@ -8,7 +8,7 @@ import { theme } from "@/config/theme"
 
 export function MantineAppProvider({ children }: { children: ReactNode }) {
   return (
-    <MantineProvider theme={theme} defaultColorScheme="auto">
+    <MantineProvider theme={theme} defaultColorScheme="light">
       <Notifications />
       {children}
     </MantineProvider>

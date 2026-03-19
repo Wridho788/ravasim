@@ -13,6 +13,15 @@ import DeviceCard from "@/modules/devices/components/DeviceCard"
 import AddDeviceModal from "@/modules/devices/components/AddDeviceModal"
 import type { Device } from "@/modules/devices/types/devices.types"
 
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  if (typeof error === "object" && error && "message" in error) {
+    const message = (error as { message?: unknown }).message
+    if (typeof message === "string") return message
+  }
+  return "Something went wrong"
+}
+
 export default function DevicesPage() {
   const { data, isLoading } = useDevices()
   const addDevice = useAddDevice()
@@ -23,11 +32,11 @@ export default function DevicesPage() {
     try {
       await addDevice.mutateAsync(device)
       notifications.show({ title: "Saved", message: "Device added" })
-    } catch (e: any) {
+    } catch (e: unknown) {
       notifications.show({
         color: "red",
         title: "Save failed",
-        message: e?.message ?? "Something went wrong",
+        message: getErrorMessage(e),
       })
     }
   }

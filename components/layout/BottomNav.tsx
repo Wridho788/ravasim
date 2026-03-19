@@ -59,7 +59,6 @@ export default function BottomNav() {
     <Paper
       withBorder
       h="100%"
-      px="md"
       style={{ display: "flex", alignItems: "center" }}
     >
       <Group justify="space-between" w="100%" gap="xs" wrap="nowrap">

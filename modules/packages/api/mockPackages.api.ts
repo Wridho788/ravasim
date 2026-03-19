@@ -9,6 +9,8 @@ const packages: Package[] = [
     data: "5 GB",
     validity: "7 Days",
     price: 5,
+    popularity: 70,
+    badge: "Recommended",
   },
   {
     id: "2",
@@ -17,6 +19,8 @@ const packages: Package[] = [
     data: "10 GB",
     validity: "15 Days",
     price: 8,
+    popularity: 95,
+    badge: "Best Seller",
   },
   {
     id: "3",
@@ -25,6 +29,7 @@ const packages: Package[] = [
     data: "20 GB",
     validity: "30 Days",
     price: 15,
+    popularity: 80,
   },
   {
     id: "4",
@@ -33,6 +38,7 @@ const packages: Package[] = [
     data: "50 GB",
     validity: "30 Days",
     price: 25,
+    popularity: 60,
   },
 ]
 

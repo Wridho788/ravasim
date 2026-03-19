@@ -1,21 +1,35 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { Button, Container, Text, Title } from "@mantine/core";
+import { useEffect, useMemo } from "react"
+import { useRouter } from "next/navigation"
+
+import { useAuthStore } from "@/store/auth.store"
+
+function getStoredToken(): string | null {
+  try {
+    const raw = localStorage.getItem("ravasim_auth")
+    if (!raw) return null
+    const parsed = JSON.parse(raw) as { state?: { token?: string | null } }
+    return parsed?.state?.token ?? null
+  } catch {
+    return null
+  }
+}
 
 export default function HomePage() {
-  return (
-    <Container size="sm" py={80}>
-      <Title order={1}>RavaSIM</Title>
+  const router = useRouter()
+  const token = useAuthStore((s) => s.token)
 
-      <Text mt="md">
-        Digital Connectivity Platform for managing eSIM packages, devices, and
-        usage analytics.
-      </Text>
+  const storedToken = useMemo(() => {
+    if (token) return null
+    return getStoredToken()
+  }, [token])
 
-      <Button mt="xl" component={Link} href="/login">
-        Get Started
-      </Button>
-    </Container>
-  );
+  const isAuthed = Boolean(token || storedToken)
+
+  useEffect(() => {
+    router.replace(isAuthed ? "/dashboard" : "/login")
+  }, [isAuthed, router])
+
+  return null
 }

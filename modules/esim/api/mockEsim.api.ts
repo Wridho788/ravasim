@@ -3,6 +3,12 @@ import type { Esim } from "../types/esim.types"
 
 const STORAGE_KEY = "ravasim_esims"
 
+function daysFromNowIso(days: number) {
+  const d = new Date()
+  d.setDate(d.getDate() + days)
+  return d.toISOString()
+}
+
 const seed: Esim[] = [
   {
     id: "1",
@@ -10,6 +16,7 @@ const seed: Esim[] = [
     totalData: 10,
     usedData: 2,
     status: "active",
+    expiresAt: daysFromNowIso(5),
   },
   {
     id: "2",
@@ -17,6 +24,7 @@ const seed: Esim[] = [
     totalData: 20,
     usedData: 0,
     status: "inactive",
+    expiresAt: daysFromNowIso(30),
   },
 ]
 
@@ -50,8 +58,29 @@ export const activateEsim = async (id: string) => {
 
   if (esim) {
     esim.status = "active"
+    if (!esim.expiresAt) esim.expiresAt = daysFromNowIso(7)
     write(esims)
   }
 
   return esim
+}
+
+export const createEsim = async (payload: Omit<Esim, "id"> & { id?: string }) => {
+  await mockDelay(700)
+
+  const esims = read()
+  const id = payload.id ?? Date.now().toString()
+
+  const next: Esim = {
+    id,
+    packageName: payload.packageName,
+    totalData: payload.totalData,
+    usedData: payload.usedData,
+    status: payload.status,
+    expiresAt: payload.expiresAt,
+  }
+
+  esims.unshift(next)
+  write(esims)
+  return next
 }

@@ -4,4 +4,5 @@ export interface Esim {
   totalData: number
   usedData: number
   status: "active" | "inactive"
+  expiresAt?: string
 }

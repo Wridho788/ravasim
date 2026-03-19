@@ -17,7 +17,7 @@ export default function Topbar() {
   }
 
   return (
-    <Group justify="space-between" px="md" h="100%">
+    <Group justify="space-between" h="100%" w="100%">
       <Text fw={700}>RavaSIM</Text>
 
       <Group>

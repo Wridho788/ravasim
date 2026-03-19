@@ -23,6 +23,15 @@ type FieldErrors = Partial<
   Record<"name" | "email" | "password" | "confirmPassword", string>
 >
 
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  if (typeof error === "object" && error && "message" in error) {
+    const message = (error as { message?: unknown }).message
+    if (typeof message === "string") return message
+  }
+  return "Something went wrong"
+}
+
 function getStoredToken(): string | null {
   try {
     const raw = localStorage.getItem("ravasim_auth")
@@ -60,11 +69,21 @@ export default function RegisterPage() {
         { name, email, password, confirmPassword },
         { abortEarly: false }
       )
-    } catch (err: any) {
+    } catch (err: unknown) {
       const next: FieldErrors = {}
-      if (Array.isArray(err?.inner)) {
-        for (const e of err.inner) {
-          if (e?.path) next[e.path as keyof FieldErrors] = e.message
+      if (
+        typeof err === "object" &&
+        err &&
+        "inner" in err &&
+        Array.isArray((err as { inner?: unknown }).inner)
+      ) {
+        const inner = (err as {
+          inner: Array<{ path?: unknown; message?: unknown }>
+        }).inner
+        for (const e of inner) {
+          if (typeof e?.path === "string" && typeof e?.message === "string") {
+            next[e.path as keyof FieldErrors] = e.message
+          }
         }
       }
       setErrors(next)
@@ -79,11 +98,11 @@ export default function RegisterPage() {
         message: "Account created. Please login.",
       })
       router.push("/login")
-    } catch (e: any) {
+    } catch (e: unknown) {
       notifications.show({
         color: "red",
         title: "Register failed",
-        message: e?.message ?? "Something went wrong",
+        message: getErrorMessage(e),
       })
     } finally {
       setIsSubmitting(false)

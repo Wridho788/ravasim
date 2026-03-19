@@ -1,7 +1,18 @@
-import { createTheme } from "@mantine/core"
+import { Button, Card, createTheme, InputBase } from "@mantine/core"
 
 export const theme = createTheme({
   primaryColor: "brand",
+
+  // Force "mobile layout" even on desktop/tablet widths.
+  // Mantine responsive props (sm/md/lg/xl) are based on viewport breakpoints.
+  // By pushing breakpoints very high, only `base` rules apply in normal screens.
+  breakpoints: {
+    xs: "30em",
+    sm: "999em",
+    md: "999em",
+    lg: "999em",
+    xl: "999em",
+  },
 
   colors: {
     brand: [
@@ -18,11 +29,43 @@ export const theme = createTheme({
     ],
   },
 
-  defaultRadius: "md",
+  defaultRadius: "lg",
   fontFamily:
     "var(--font-geist-sans), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
   headings: {
     fontFamily:
       "var(--font-geist-sans), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
+  },
+
+  defaultGradient: { from: "brand", to: "cyan" },
+
+  components: {
+    Card: Card.extend({
+      defaultProps: {
+        withBorder: true,
+        shadow: "sm",
+        radius: "lg",
+        p: "lg",
+      },
+      styles: (theme) => ({
+        root: {
+          borderColor: theme.colors.gray[2],
+        },
+      }),
+    }),
+
+    Button: Button.extend({
+      defaultProps: {
+        radius: "md",
+        size: "md",
+      },
+    }),
+
+    InputBase: InputBase.extend({
+      defaultProps: {
+        radius: "md",
+        size: "md",
+      },
+    }),
   },
 })

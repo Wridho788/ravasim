@@ -2,7 +2,13 @@
 
 import { Modal, Text } from "@mantine/core"
 
-export default function QRActivation({ opened, onClose }: any) {
+export default function QRActivation({
+  opened,
+  onClose,
+}: {
+  opened: boolean
+  onClose: () => void
+}) {
   return (
     <Modal opened={opened} onClose={onClose} title="eSIM Activation QR">
       <Text ta="center">[ QR CODE SIMULATION ]</Text>

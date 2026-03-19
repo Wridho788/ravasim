@@ -5,4 +5,6 @@ export interface Package {
   data: string
   validity: string
   price: number
+  popularity?: number
+  badge?: "Best Seller" | "Recommended"
 }

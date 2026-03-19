@@ -22,6 +22,15 @@ import { useAuthStore } from "@/store/auth.store"
 
 type FieldErrors = Partial<Record<"email" | "password", string>>
 
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  if (typeof error === "object" && error && "message" in error) {
+    const message = (error as { message?: unknown }).message
+    if (typeof message === "string") return message
+  }
+  return "Invalid credentials"
+}
+
 function getStoredToken(): string | null {
   try {
     const raw = localStorage.getItem("ravasim_auth")
@@ -59,11 +68,21 @@ export default function LoginPage() {
 
     try {
       await loginSchema.validate({ email, password }, { abortEarly: false })
-    } catch (err: any) {
+    } catch (err: unknown) {
       const next: FieldErrors = {}
-      if (Array.isArray(err?.inner)) {
-        for (const e of err.inner) {
-          if (e?.path) next[e.path as "email" | "password"] = e.message
+      if (
+        typeof err === "object" &&
+        err &&
+        "inner" in err &&
+        Array.isArray((err as { inner?: unknown }).inner)
+      ) {
+        const inner = (err as {
+          inner: Array<{ path?: unknown; message?: unknown }>
+        }).inner
+        for (const e of inner) {
+          if (typeof e?.path === "string" && typeof e?.message === "string") {
+            next[e.path as "email" | "password"] = e.message
+          }
         }
       }
       setErrors(next)
@@ -78,11 +97,11 @@ export default function LoginPage() {
         message: `Welcome, ${res.user.name}`,
       })
       router.push("/dashboard")
-    } catch (e: any) {
+    } catch (e: unknown) {
       notifications.show({
         color: "red",
         title: "Login failed",
-        message: e?.message ?? "Invalid credentials",
+        message: getErrorMessage(e),
       })
     }
   }

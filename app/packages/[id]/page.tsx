@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
-import { Button, Card, Loader, Text, Title } from "@mantine/core"
+import { Badge, Button, Card, Group, Skeleton, Stack, Text, Title } from "@mantine/core"
 
 import AuthGuard from "@/components/auth/AuthGuard"
 import DashboardShell from "@/components/layout/AppShell"
@@ -22,18 +22,46 @@ export default function PackageDetailPage() {
     <AuthGuard>
       <DashboardShell>
         {isLoading ? (
-          <Loader />
+          <Stack>
+            <Skeleton height={34} width="60%" />
+            <Skeleton height={180} radius="lg" />
+          </Stack>
         ) : !data ? (
           <Text>Package not found</Text>
         ) : (
-          <Card withBorder p="xl">
-            <Title order={2}>{data.name}</Title>
+          <Card p="lg">
+            <Group justify="space-between" align="flex-start" gap="md">
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <Title order={2} lineClamp={2}>
+                  {data.name}
+                </Title>
+                <Text c="dimmed" mt={6}>
+                  {data.country}
+                </Text>
+              </div>
+              {data.badge ? (
+                <Badge variant="light" color={data.badge === "Best Seller" ? "yellow" : "brand"}>
+                  {data.badge}
+                </Badge>
+              ) : null}
+            </Group>
 
-            <Text mt="md">Country: {data.country}</Text>
-            <Text>Data: {data.data}</Text>
-            <Text>Validity: {data.validity}</Text>
+            <Stack gap={6} mt="lg">
+              <Text>
+                <Text span fw={600}>
+                  Data:
+                </Text>{" "}
+                {data.data}
+              </Text>
+              <Text>
+                <Text span fw={600}>
+                  Validity:
+                </Text>{" "}
+                {data.validity}
+              </Text>
+            </Stack>
 
-            <Text mt="md" fw={700}>
+            <Text mt="lg" fw={800} size="xl">
               ${data.price}
             </Text>
 
