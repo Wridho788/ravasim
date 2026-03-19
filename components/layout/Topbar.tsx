@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Group, Text } from "@mantine/core"
+import { Button, Group, Text, UnstyledButton } from "@mantine/core"
 import { useRouter } from "next/navigation"
 
 import { useAuthStore } from "@/store/auth.store"
@@ -21,7 +21,11 @@ export default function Topbar() {
       <Text fw={700}>RavaSIM</Text>
 
       <Group>
-        <Text size="sm">{user?.name}</Text>
+        {user?.name ? (
+          <UnstyledButton onClick={() => router.push("/profile")} aria-label="Open profile">
+            <Text size="sm">{user.name}</Text>
+          </UnstyledButton>
+        ) : null}
         <Button size="xs" variant="light" onClick={handleLogout}>
           Logout
         </Button>

@@ -12,6 +12,7 @@
     "@mantine/core": "^8.3.17",
     "@mantine/hooks": "^8.3.17",
     "@mantine/notifications": "^8.3.17",
+    "@tabler/icons-react": "^3.40.0",
     "@tanstack/react-query": "^5.90.21",
     "next": "16.1.6",
     "react": "19.2.3",
